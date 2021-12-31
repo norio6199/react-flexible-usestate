@@ -10,13 +10,13 @@ const initialValues = {
 }
 
 const App: React.VFC = () => {
-  const [ states, setStates, clearStates ] = useStates(initialValues);
+  const [ states, setStates, resetStates ] = useStates(initialValues);
 
   const handleInclimentText = (): void => {
     setStates('text', `${states.text} + fuga`)
   }
-  const handleClearText = (): void => {
-    clearStates('text');
+  const handleResetText = (): void => {
+    resetStates('text');
   }
 
   const handleInclimentNumber = (): void => {
@@ -24,24 +24,24 @@ const App: React.VFC = () => {
       return prev * 2
     })
   }
-  const handleClearNumber = (): void => {
-    clearStates('number');
+  const handleResetNumber = (): void => {
+    resetStates('number');
   }
 
-  const handleClearAll = (): void => {
-    clearStates();
+  const handleResetAll = (): void => {
+    resetStates();
   }
 
   return (
     <div>
       <p>text: {states.text}</p>
       <button onClick={handleInclimentText}>update text</button>
-      <button onClick={handleClearText}>clear text</button>
+      <button onClick={handleResetText}>reset text</button>
       <p>number: {states.number}</p>
       <button onClick={handleInclimentNumber}>update number</button>
-      <button onClick={handleClearNumber}>clear number</button>
+      <button onClick={handleResetNumber}>reset number</button>
       <br />
-      <button onClick={handleClearAll}>clear all</button>
+      <button onClick={handleResetAll}>reset all</button>
     </div>
   );
 };

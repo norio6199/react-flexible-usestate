@@ -14,7 +14,7 @@ const useStates = <T>(initialValues: T) => {
       })
   }
 
-  const clearStates = <K extends keyof T>(key?: K) => {
+  const resetStates = <K extends keyof T>(key?: K) => {
     let targetKeys: (keyof T)[];
     if (!key) {
       targetKeys = (Object.keys(initialValues) as (keyof T)[]);
@@ -31,11 +31,11 @@ const useStates = <T>(initialValues: T) => {
   return [
     states,
     setStates,
-    clearStates
+    resetStates
   ] as [
     typeof states,
     typeof setStates,
-    typeof clearStates,
+    typeof resetStates,
   ]
 };
 
