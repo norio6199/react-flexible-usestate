@@ -1,8 +1,22 @@
 {
+  "name": "@norio6199/react-usestates",
+  "author": "norio6199",
   "version": "0.0.1",
+  "description": "React library for managing multiple states in an immutable manner like useState.",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/norio6199/react-usestates.git"
+  },
+  "keywords": [
+    "react",
+    "useState",
+    "useStates",
+    "hooks",
+    "immutable"
+  ],
   "files": [
     "dist"
   ],
@@ -34,8 +48,6 @@
     "trailingComma": "all",
     "tabWidth": 2
   },
-  "name": "@norio6199/react-usestates",
-  "author": "norio6199",
   "module": "dist/react-usestates.esm.js",
   "size-limit": [
     {
