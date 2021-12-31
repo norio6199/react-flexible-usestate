@@ -14,9 +14,17 @@ const useStates = <T>(initialValues: T) => {
       })
   }
 
-  const clearStates = <K extends keyof T>(key: K) => {
-    stateUpdater((draft) => {
-      draft[key] = initialValues[key];
+  const clearStates = <K extends keyof T>(key?: K) => {
+    let targetKeys: (keyof T)[];
+    if (!key) {
+      targetKeys = (Object.keys(initialValues) as (keyof T)[]);
+    } else {
+      targetKeys = [key];
+    }
+    targetKeys.forEach((key) => {
+      stateUpdater((draft) => {
+        draft[key] = initialValues[key];
+      })
     })
   }
 

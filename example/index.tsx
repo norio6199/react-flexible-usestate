@@ -1,8 +1,8 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import useStates from '../.';
-import useStates from '@norio6199/react-usestates';
+import useStates from '../.';
+// import useStates from '@norio6199/react-usestates';
 
 const initialValues = {
   text: 'hogehoge',
@@ -28,6 +28,10 @@ const App: React.VFC = () => {
     clearStates('number');
   }
 
+  const handleClearAll = (): void => {
+    clearStates();
+  }
+
   return (
     <div>
       <p>text: {states.text}</p>
@@ -36,6 +40,8 @@ const App: React.VFC = () => {
       <p>number: {states.number}</p>
       <button onClick={handleInclimentNumber}>update number</button>
       <button onClick={handleClearNumber}>clear number</button>
+      <br />
+      <button onClick={handleClearAll}>clear all</button>
     </div>
   );
 };
