@@ -231,6 +231,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@norio6199/react-usestates@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@norio6199/react-usestates/-/react-usestates-0.0.2.tgz#116a32bfb3f26b339cae6fa98570e0c8760645ba"
+  integrity sha512-gx3OyTfkU4KALycKWgPYM26kfGwDir3dSQWasKDRmHjgVYerRA8xzT1GRNgtx+l9TClgTJfm05EAVD3gdL1RCg==
+  dependencies:
+    immer "^9.0.7"
+
 "@parcel/babel-ast-utils@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@parcel/babel-ast-utils/-/babel-ast-utils-2.0.1.tgz#e131e74136af878e0b2355d63acf19abbe1920db"
@@ -2446,6 +2453,11 @@ ignore@^5.1.4:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
+
+immer@^9.0.7:
+  version "9.0.7"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.7.tgz#b6156bd7db55db7abc73fd2fdadf4e579a701075"
+  integrity sha512-KGllzpbamZDvOIxnmJ0jI840g7Oikx58lBPWV0hUh7dtAyZpFqqrBZdKka5GlTwMTZ1Tjc/bKKW4VSFAt6BqMA==
 
 import-fresh@^3.2.1:
   version "3.3.0"
