@@ -9,22 +9,32 @@ const initialValues = {
 }
 
 const App: React.VFC = () => {
-  const {states, setStates} = useStates(initialValues);
+  const [ states, setStates, clearStates ] = useStates(initialValues);
 
   const handleInclimentText = (): void => {
-    setStates((draft) => draft.text = `${draft.text}+fuga`)
+    setStates('text', `${states.text} + fuga`)
+  }
+  const handleClearText = (): void => {
+    clearStates('text');
   }
 
   const handleInclimentNumber = (): void => {
-    setStates((draft) => draft.number = draft.number * 2)
+    setStates('number', (prev) => {
+      return prev * 2
+    })
+  }
+  const handleClearNumber = (): void => {
+    clearStates('number');
   }
 
   return (
     <div>
       <p>text: {states.text}</p>
       <button onClick={handleInclimentText}>update text</button>
+      <button onClick={handleClearText}>clear text</button>
       <p>number: {states.number}</p>
       <button onClick={handleInclimentNumber}>update number</button>
+      <button onClick={handleClearNumber}>clear number</button>
     </div>
   );
 };
