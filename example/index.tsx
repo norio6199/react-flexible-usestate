@@ -1,12 +1,30 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+import useStates from '../.';
 
-const App = () => {
+const initialValues = {
+  text: 'hogehoge',
+  number: 123
+}
+
+const App: React.VFC = () => {
+  const {states, setStates} = useStates(initialValues);
+
+  const handleInclimentText = (): void => {
+    setStates((draft) => draft.text = `${draft.text}+fuga`)
+  }
+
+  const handleInclimentNumber = (): void => {
+    setStates((draft) => draft.number = draft.number * 2)
+  }
+
   return (
     <div>
-      <Thing />
+      <p>text: {states.text}</p>
+      <button onClick={handleInclimentText}>update text</button>
+      <p>number: {states.number}</p>
+      <button onClick={handleInclimentNumber}>update number</button>
     </div>
   );
 };
