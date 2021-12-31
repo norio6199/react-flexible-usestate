@@ -1,7 +1,7 @@
 {
   "name": "@norio6199/react-usestates",
   "author": "norio6199",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React library for managing multiple states in an immutable manner like useState.",
   "license": "MIT",
   "main": "dist/index.js",
