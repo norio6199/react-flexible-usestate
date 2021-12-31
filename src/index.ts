@@ -1,22 +1,34 @@
 import { useState } from 'react';
 import produce from 'immer';
 
-type UseStatesReturn<T> = {
-  states: T;
-  setStates: (recipe: (draft: T) => void) => void;
-}
+const useStates = <T>(initialValues: T) => {
+  const [states, _setStates] = useState(initialValues);
 
-const useStates = <T>(initialStates: T): UseStatesReturn<T> => {
-  const [states, _setStates] = useState(initialStates);
-
-  const setStates = (recipe: (draft: T) => void): void => {
+  const stateUpdater = (recipe: (draft: T) => void): void => {
     _setStates((prev) => produce(prev, recipe));
   };
 
-  return {
-    states,
-    setStates
+  const setStates = <K extends keyof T>(key: K, value: T[K] | ((prev: T[K]) => T[K])) => {
+      stateUpdater((draft) => {
+        draft[key] = typeof value === 'function' ? (value as ((prev: T[K]) => T[K]))(draft[key]) : value;
+      })
   }
+
+  const clearStates = <K extends keyof T>(key: K) => {
+    stateUpdater((draft) => {
+      draft[key] = initialValues[key];
+    })
+  }
+
+  return [
+    states,
+    setStates,
+    clearStates
+  ] as [
+    typeof states,
+    typeof setStates,
+    typeof clearStates,
+  ]
 };
 
 export default useStates;
