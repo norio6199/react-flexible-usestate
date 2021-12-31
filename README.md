@@ -2,12 +2,7 @@
 
 This is react library for managing multiple states in an immutable manner like React.useState.
 
-## How to install
-```bash
-npm install @norio6199/react-usestates # or yarn add @norio6199/react-usestates
-```
-
-## What is the purpose
+## What is react-usestates
 ```ts
 // if you want to manage state of these values
 const initialValue = {
@@ -45,6 +40,11 @@ const [hoge10, setHoge10] = useState(initialValue.hoge10);
 import useStates from '@norio6199/react-usestates';
 
 const [states, setStates] = useStates(initialValue);
+```
+
+## How to install
+```bash
+npm install @norio6199/react-usestates # or yarn add @norio6199/react-usestates
 ```
 
 ## How to get state
