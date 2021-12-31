@@ -32,7 +32,7 @@
     "trailingComma": "all",
     "tabWidth": 2
   },
-  "name": "react-usestates",
+  "name": "@norio6199/react-usestates",
   "author": "norio6199",
   "module": "dist/react-usestates.esm.js",
   "size-limit": [
