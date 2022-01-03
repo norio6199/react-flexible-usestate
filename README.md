@@ -3,6 +3,7 @@
 This is react library for managing multiple states in an immutable manner like React.useState.
 
 ## What is react-usestates
+
 ```ts
 // if you want to manage state of these values
 const initialValue = {
@@ -39,51 +40,79 @@ const [hoge10, setHoge10] = useState(initialValue.hoge10);
 // and this is code using react-usestates.
 import useStates from '@norio6199/react-usestates';
 
-const [states, setStates] = useStates(initialValue);
+const { states, setState } = useStates(initialValue);
 ```
 
 ## How to install
+
 ```bash
 npm install @norio6199/react-usestates # or yarn add @norio6199/react-usestates
 ```
 
 ## How to get state
+
 ```ts
 // just call target property.
 states.hoge1;
 ```
 
 ## How to set state
+
 ```ts
-// pass key and value to setStates.
-setStates('hoge1', 'new value');
+// pass key and value to setState.
+setState('hoge1', 'new value');
 
 // or you can pass function also.
-setStates('hoge1', (prev) => {
-  return `${prev} is current value`
+setState('hoge1', prev => {
+  return `${prev} is current value`;
+});
+
+// or do flexible using setStates.
+setStates(draft => {
+  draft.hoge1 = 'new value';
+  draft.someObj['newParam'] = 'you can set state flexible';
+  draft.someArray[1] = 'like this';
 });
 ```
 
 ## How to reset state
+
 ```ts
-// react-usestates provides resetStates.
-const [states, setStates, resetStates] = useStates(initialValue);
+// react-usestates provides resetState.
+const { resetState } = useStates(initialValue);
 
 // just pass a key to reset the value to its initial value.
-resetStates('hoge1');
+resetState('hoge1');
 
 // or, if nothing is passed, all values will be initialized.
-resetStates();
+resetState();
 ```
 
 ## Of course type safe
-```ts
-typeof states.someText // string
-typeof states.someNumber // number
 
-setStates('someText', 'new value'); // ok
-setStates('someText', 123); // type error
+```ts
+typeof states.someText; // string
+typeof states.someNumber; // number
+
+setState('someText', 'new value'); // ok
+setState('someText', 123); // type error
 ```
 
 ## Of course immutable
+
 Inside react-usestates we use [immer](https://github.com/immerjs/immer) to manage the state in an immutable.
+
+```ts
+// Can do it like this.
+setStates(draft => {
+  draft.someObj['newParam'] = 'new value';
+});
+
+// No need to think about immutable like this.
+setStates(draft => {
+  draft.someObj = {
+    ...draft.someObj,
+    newParam: 'new value',
+  };
+});
+```
