@@ -4,6 +4,7 @@ import produce from 'immer';
 type UseStatesReturn<T> = {
   states: T;
   setState<K extends keyof T>(key: K, value: T[K] | ((prev: T[K]) => T[K])): void;
+  setStates(recipe: (draft: T) => void): void;
   resetState<K extends keyof T>(key?: K): void;
 };
 
@@ -35,7 +36,7 @@ const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
     });
   };
 
-  return { states, setState, resetState };
+  return { states, setState, setStates, resetState };
 };
 
 export default useStates;
