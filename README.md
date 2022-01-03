@@ -1,8 +1,8 @@
-# User Guide for react-usestates
+# User Guide for react-flexible-usestate
 
-This is react library for managing multiple states in an immutable manner like React.useState.
+React library for managing multiple states in an immutable and flexible.
 
-## What is react-usestates
+## What is react-flexible-usestate
 
 ```ts
 // if you want to manage state of these values
@@ -37,8 +37,8 @@ const [hoge10, setHoge10] = useState(initialValue.hoge10);
 ```
 
 ```ts
-// and this is code using react-usestates.
-import useStates from '@norio6199/react-usestates';
+// and this is code using react-flexible-usestate.
+import useStates from 'react-flexible-usestate';
 
 const { states, setState } = useStates(initialValue);
 ```
@@ -46,7 +46,7 @@ const { states, setState } = useStates(initialValue);
 ## How to install
 
 ```bash
-npm install @norio6199/react-usestates # or yarn add @norio6199/react-usestates
+npm install react-flexible-usestate # or yarn add react-flexible-usestate
 ```
 
 ## How to get state
@@ -78,7 +78,7 @@ setStates(draft => {
 ## How to reset state
 
 ```ts
-// react-usestates provides resetState.
+// react-flexible-usestate provides resetState.
 const { resetState } = useStates(initialValue);
 
 // just pass a key to reset the value to its initial value.
@@ -100,7 +100,7 @@ setState('someText', 123); // type error
 
 ## Of course immutable
 
-Inside react-usestates we use [immer](https://github.com/immerjs/immer) to manage the state in an immutable.
+Inside react-flexible-usestate we use [immer](https://github.com/immerjs/immer) to manage the state in an immutable.
 
 ```ts
 // Can do it like this.
