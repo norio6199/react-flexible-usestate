@@ -4,39 +4,32 @@ import produce from 'immer';
 const useStates = <T>(initialValues: T) => {
   const [states, _setStates] = useState(initialValues);
 
-  const stateUpdater = (recipe: (draft: T) => void): void => {
-    _setStates((prev) => produce(prev, recipe));
+  const setStates = (recipe: (draft: T) => void): void => {
+    _setStates(prev => produce(prev, recipe));
   };
 
-  const setStates = <K extends keyof T>(key: K, value: T[K] | ((prev: T[K]) => T[K])) => {
-      stateUpdater((draft) => {
-        draft[key] = typeof value === 'function' ? (value as ((prev: T[K]) => T[K]))(draft[key]) : value;
-      })
-  }
+  const setState = <K extends keyof T>(key: K, value: T[K] | ((prev: T[K]) => T[K])) => {
+    setStates(draft => {
+      draft[key] =
+        typeof value === 'function' ? (value as (prev: T[K]) => T[K])(draft[key]) : value;
+    });
+  };
 
-  const resetStates = <K extends keyof T>(key?: K) => {
+  const resetState = <K extends keyof T>(key?: K) => {
     let targetKeys: (keyof T)[];
     if (!key) {
-      targetKeys = (Object.keys(initialValues) as (keyof T)[]);
+      targetKeys = Object.keys(initialValues) as (keyof T)[];
     } else {
       targetKeys = [key];
     }
-    targetKeys.forEach((key) => {
-      stateUpdater((draft) => {
+    targetKeys.forEach(key => {
+      setStates(draft => {
         draft[key] = initialValues[key];
-      })
-    })
-  }
+      });
+    });
+  };
 
-  return [
-    states,
-    setStates,
-    resetStates
-  ] as [
-    typeof states,
-    typeof setStates,
-    typeof resetStates,
-  ]
+  return [states, setState, resetState] as [typeof states, typeof setState, typeof resetState];
 };
 
 export default useStates;
