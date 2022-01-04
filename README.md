@@ -5,7 +5,7 @@ React library for managing multiple states in an immutable and flexible.
 ## What is react-flexible-usestate for
 
 ```ts
-// We have to manage lots of states of value state in my app.
+// We have to manage lots of states of value state in our app.
 const initialValues = {
   ... // lots of values
 };
