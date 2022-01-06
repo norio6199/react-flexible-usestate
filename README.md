@@ -2,104 +2,112 @@
 
 React library for managing multiple states in an immutable and flexible.
 
-## What is react-flexible-usestate for
+## Why need react-flexible-usestate
 
 ```ts
-// We have to manage lots of states of value state in our app.
-const initialValues = {
-  ... // lots of values
-};
+// we have to manage lots of states in our app.
+const initialValues = { ... };
 
 // but using React.useState spends lots of line.
 import { useState } from 'react';
 
-const [hoge1, setHoge1] = useState(initialValues.hoge1);
-const [hoge2, setHoge2] = useState(initialValues.hoge2);
-const [hoge3, setHoge3] = useState(initialValues.hoge3);
-const [hoge4, setHoge4] = useState(initialValues.hoge4);
-const [hoge5, setHoge5] = useState(initialValues.hoge5);
-const [hoge6, setHoge6] = useState(initialValues.hoge6);
-const [hoge7, setHoge7] = useState(initialValues.hoge7);
-const [hoge8, setHoge8] = useState(initialValues.hoge8);
-const [hoge9, setHoge9] = useState(initialValues.hoge9);
-const [hoge10, setHoge10] = useState(initialValues.hoge10);
+const [value01, setValue01] = useState(initialValues.value01);
+const [value02, setValue02] = useState(initialValues.value02);
+const [value03, setValue03] = useState(initialValues.value03);
+const [value04, setValue04] = useState(initialValues.value04);
+const [value05, setValue05] = useState(initialValues.value05);
+const [value06, setValue06] = useState(initialValues.value06);
+const [value07, setValue07] = useState(initialValues.value07);
+const [value08, setValue08] = useState(initialValues.value08);
+const [value09, setValue09] = useState(initialValues.value09);
+const [value10, setValue10] = useState(initialValues.value10);
 
-// And try to manage states with object.
+// and try to manage states with object.
 const [states, setStates] = useState(initialValues);
 
-// But soon, it will be tired to keep it immutable.
-const updateSomeStates = () => {
+// it's still easy to access each state
+console.log(states.value01);
+console.log(states.value02);
+
+// but if you want to update just one state, you have to set whole object to make it immutable.
+const updateOneState = () => {
   const newStates = { ...states };
-  newStates.someParam = 'new value';
+  newStates.valueXX = 'new value';
   setStates(newStates);
 };
-const resetSomeStates = () => {
+
+// soon, you'll get tired of making it immutable...
+const updateFewStates = () => {
   const newStates = { ...states };
-  newStates.someParam = initialValues.someParam;
+  newStates.valueXX = 'new value';
+  newStates.valueYY = 'new value';
+  setStates(newStates);
+};
+const resetStates = () => {
+  const newStates = { ...states };
+  newStates.valueXX = initialValues.valueXX;
+  newStates.valueYY = initialValues.valueYY;
   setStates(newStates);
 };
 ```
 
-**Do you have the same problem?**  
-**Please try react-flexible-usestate!!**
+## It is time to use react-flexible-usestate
 
-```ts
-// This is sample code using react-flexible-usestate
-import useStates from 'react-flexible-usestate';
+```diff
+- import { useState } from 'react';
++ import useStates from 'react-flexible-usestate';
 
-const { states, setState, resetState } = useStates(initialValues);
+- const [states, setStates] = useState(initialValues);
++ const { states, setState, setStates, resetState } = useStates(initialValues);
 
-const updateSomeStates = () => {
-  setState('someParam', 'new value');
+// no diff
+console.log(states.value01);
+console.log(states.value02);
+
+const updateOneState = () => {
+-   const newStates = { ...states };
+-   newStates.valueXX = 'new value';
+-   setStates(newStates);
+
++   // pass key and value to setState.
++   setState('valueXX', 'new value');
+
++   // or if you want to use prev value, you can write like this.
++   setState('valueXX', (prev) => {
++     return  `update ${prev} to new value`;
++   });
 };
-const resetSomeStates = () => {
-  resetState('someParam');
+
+const updateFewStates = () => {
+-   const newStates = { ...states };
+-   newStates.valueXX = 'new value';
+-   newStates.valueYY = 'new value';
+-   setStates(newStates);
+
++   // you can use setState.
++   setState('valueXX', 'new value');
++   setState('valueYY', 'new value');
+
++   // or using setState(s) for more flexible!!
++   setStates((draft) => {
++     draft.valueXX = 'new value';
++     draft.valueYY = `update ${draft.valueYY} to new value`;
++   });
 };
-```
 
-## How to install
+const resetStates = () => {
+-   const newStates = { ...states };
+-   newStates.valueXX = initialValues.valueXX;
+-   newStates.valueYY = initialValues.valueYY;
+-   setStates(newStates);
 
-```bash
-npm install react-flexible-usestate # or yarn add react-flexible-usestate
-```
++   // pass key to setState to initialized.
++   resetState('valueXX');
++   resetState('valueYY');
 
-## How to get state
-
-```ts
-// just call target property.
-states.hoge1;
-```
-
-## How to set state
-
-```ts
-// pass key and value to setState.
-setState('hoge1', 'new value');
-
-// or you can pass function also.
-setState('hoge1', prev => {
-  return `${prev} is current value`;
-});
-
-// or do flexible using setState(s).
-setStates(draft => {
-  draft.hoge1 = 'new value';
-  draft.someObj['newParam'] = 'you can set state flexible';
-  draft.someArray[1] = 'like this';
-});
-```
-
-## How to reset state
-
-```ts
-// react-flexible-usestate provides resetState.
-const { resetState } = useStates(initialValues);
-
-// just pass a key to reset the value to its initial value.
-resetState('hoge1');
-
-// or, if nothing is passed, all values will be initialized.
-resetState();
++   // or, if nothing is passed, all values will be initialized.
++   resetState()
+};
 ```
 
 ## Of course type safe
@@ -110,23 +118,38 @@ typeof states.someNumber; // number
 
 setState('someText', 'new value'); // ok
 setState('someText', 123); // type error
+
+resetState('Non-existent property'); // type error
 ```
 
 ## Of course immutable
 
 Inside react-flexible-usestate we use [immer](https://github.com/immerjs/immer) to manage the state in an immutable.
 
-```ts
-// Can do it like this.
-setStates(draft => {
-  draft.someObj['newParam'] = 'new value';
-});
+## Tips
 
-// No need to think about immutable like this.
+If you have enabled the "no-param-reassign" rule in eslint, you should be warned with the following code.
+
+```ts
 setStates(draft => {
-  draft.someObj = {
-    ...draft.someObj,
-    newParam: 'new value',
-  };
+  draft.valueXX = 'new value'; // here
 });
 ```
+
+If you encounter this problem, this issue and comments will be helpful for you. -> https://github.com/immerjs/immer/issues/189#issuecomment-506396244
+
+## Release Note
+
+### v1.0.4
+
+- export type of setState, setState(s), resetState
+- add release note to README
+- update README
+
+### v1.0.1 - v1.0.3
+
+- update README
+
+### v1.0.0
+
+- released
