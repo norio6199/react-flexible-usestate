@@ -140,6 +140,10 @@ If you encounter this problem, this issue and comments will be helpful for you. 
 
 ## Release Note
 
+### v1.0.5
+
+- update README
+
 ### v1.0.4
 
 - export type of setState, setState(s), resetState
