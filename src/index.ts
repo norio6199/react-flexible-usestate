@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import produce from 'immer';
 
+export type SetStateAction<T = {}> = <K extends keyof T>(
+  key: K,
+  value: T[K] | ((prev: T[K]) => T[K]),
+) => void;
+export type SetStatesAction<T = {}> = (recipe: (draft: T) => void) => void;
+export type ResetStateAction<T = {}> = <K extends keyof T>(key?: K) => void;
+
 type UseStatesReturn<T> = {
   states: T;
-  setState<K extends keyof T>(key: K, value: T[K] | ((prev: T[K]) => T[K])): void;
-  setStates(recipe: (draft: T) => void): void;
-  resetState<K extends keyof T>(key?: K): void;
+  setState: SetStateAction<T>;
+  setStates: SetStatesAction<T>;
+  resetState: ResetStateAction<T>;
 };
 
 const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
