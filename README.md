@@ -101,7 +101,7 @@ const resetStates = () => {
 -   newStates.valueYY = initialValues.valueYY;
 -   setStates(newStates);
 
-+   // pass key to setState to initialized.
++   // pass key to resetState to initialized.
 +   resetState('valueXX');
 +   resetState('valueYY');
 
