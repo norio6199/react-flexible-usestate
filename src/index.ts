@@ -15,7 +15,7 @@ type UseStatesReturn<T> = {
   resetState: ResetStateAction<T>;
 };
 
-const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
+export const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
   const [states, _setStates] = useState(initialValues);
 
   const setStates = (recipe: (draft: T) => void): void => {
@@ -45,5 +45,3 @@ const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
 
   return { states, setState, setStates, resetState };
 };
-
-export default useStates;
