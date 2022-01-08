@@ -25,18 +25,18 @@ const [value10, setValue10] = useState(initialValues.value10);
 // and try to manage states with object.
 const [states, setStates] = useState(initialValues);
 
-// it's still easy to access each state
+// it's still easy to access each states.
 console.log(states.value01);
 console.log(states.value02);
 
-// but if you want to update just one state, you have to set whole object to make it immutable.
+// but if you want to update just one state, you have to set whole object to keep it immutable.
 const updateOneState = () => {
   const newStates = { ...states };
   newStates.valueXX = 'new value';
   setStates(newStates);
 };
 
-// soon, you'll get tired of making it immutable...
+// soon, you'll get tired to keep it immutable...
 const updateFewStates = () => {
   const newStates = { ...states };
   newStates.valueXX = 'new value';
@@ -55,12 +55,12 @@ const resetStates = () => {
 
 ```diff
 - import { useState } from 'react';
-+ import useStates from 'react-flexible-usestate';
++ import { useStates } from 'react-flexible-usestate';
 
 - const [states, setStates] = useState(initialValues);
 + const { states, setState, setStates, resetState } = useStates(initialValues);
 
-// no diff
+// no diff for access each states.
 console.log(states.value01);
 console.log(states.value02);
 
@@ -101,7 +101,7 @@ const resetStates = () => {
 -   newStates.valueYY = initialValues.valueYY;
 -   setStates(newStates);
 
-+   // pass key to resetState to initialized.
++   // pass key to resetState to initialize.
 +   resetState('valueXX');
 +   resetState('valueYY');
 
@@ -138,7 +138,23 @@ setStates(draft => {
 
 If you encounter this problem, this issue and comments will be helpful for you. -> https://github.com/immerjs/immer/issues/189#issuecomment-506396244
 
+or just disable rule is more easly.
+
+```ts
+/* eslint-disable no-param-reassign */
+setStates(draft => {
+  draft.valueXX = 'new value';
+});
+```
+
 ## Release Note
+
+💣 is a marker for breaking changes.
+
+### v2.0.0
+
+- 💣 change useStates to named export
+- update README
 
 ### v1.0.5
 
