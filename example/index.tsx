@@ -2,80 +2,126 @@ import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useStates } from '../.';
-// import useStates from '@norio6199/react-usestates';
 
-const initialValues = {
-  text: 'hogehoge',
-  number: 123,
-  obj: {
-    paramA: 'A',
-    paramB: 'B',
-  },
-  array: ['apple', 'orange', 'grape'],
+type Todo = {
+  title: string;
+  isDone: boolean;
+};
+
+type InitialValue = {
+  newTodoTitle: string;
+  todos: Todo[];
+};
+
+const initialValues: InitialValue = {
+  newTodoTitle: '',
+  todos: [
+    {
+      title: 'todo-a',
+      isDone: false,
+    },
+    {
+      title: 'todo-b',
+      isDone: false,
+    },
+    {
+      title: 'todo-c',
+      isDone: false,
+    },
+    {
+      title: 'todo-d',
+      isDone: true,
+    },
+  ],
 };
 
 const App: React.VFC = () => {
-  const { states, setState, setStates, resetState } = useStates(initialValues);
+  const [states, setStates, resetStates] = useStates(initialValues);
 
-  const handleInclimentText = (): void => {
-    setState('text', `${states.text} + fuga`);
-  };
-  const handleResetText = (): void => {
-    resetState('text');
-  };
+  const todoList = React.useMemo(() => states.todos.filter(todo => !todo.isDone), [states.todos]);
+  const doneList = React.useMemo(() => states.todos.filter(todo => todo.isDone), [states.todos]);
 
-  const handleInclimentNumber = (): void => {
-    setState('number', prev => {
-      return prev * 2;
-    });
-  };
-  const handleResetNumber = (): void => {
-    resetState('number');
+  const handleInputNewTodoTitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setStates('newTodoTitle', event.target.value);
   };
 
-  const handleUpdateObject = (): void => {
+  const handleAddNewTodo = (): void => {
     setStates(draft => {
-      draft.obj['paramC'] = 'C';
-      draft.obj['paramD'] = 'D';
+      draft.todos.push({
+        title: states.newTodoTitle,
+        isDone: false,
+      });
     });
-  };
-  const handleResetObject = (): void => {
-    resetState('obj');
-  };
-
-  const handleUpdateArray = (): void => {
-    setStates(draft => {
-      draft.array[1] = 'banana';
-    });
-  };
-  const handleResetArray = (): void => {
-    resetState('array');
+    resetStates('newTodoTitle');
   };
 
   const handleResetAll = (): void => {
-    resetState();
+    resetStates();
+  };
+
+  const handleToggleTodoStatus = (title: string): void => {
+    setStates(draft => {
+      const target = draft.todos.find(todo => todo.title === title);
+      if (target) {
+        target.isDone = !target.isDone;
+      }
+    });
+  };
+
+  const handleRemoveTask = (title: string): void => {
+    setStates(draft => {
+      draft.todos = draft.todos.filter(todo => todo.title !== title);
+    });
   };
 
   return (
     <div>
-      <p>text: {states.text}</p>
-      <button onClick={handleInclimentText}>update text</button>
-      <button onClick={handleResetText}>reset text</button>
-      <br />
-      <p>number: {states.number}</p>
-      <button onClick={handleInclimentNumber}>update number</button>
-      <button onClick={handleResetNumber}>reset number</button>
-      <br />
-      <p>object: {JSON.stringify(states.obj)}</p>
-      <button onClick={handleUpdateObject}>update object</button>
-      <button onClick={handleResetObject}>reset object</button>
-      <br />
-      <p>array: {JSON.stringify(states.array)}</p>
-      <button onClick={handleUpdateArray}>update array</button>
-      <button onClick={handleResetArray}>reset array</button>
-      <br />
-      <br />
-      <button onClick={handleResetAll}>reset all</button>
+      <h1>Todo App</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <input type='input' onChange={handleInputNewTodoTitle} value={states.newTodoTitle} />
+        <button type='button' onClick={handleAddNewTodo}>
+          add
+        </button>
+      </div>
+      <button type='button' onClick={handleResetAll}>
+        reset all
+      </button>
+      <h2>Todo</h2>
+      <ul style={{ listStyle: 'none' }}>
+        {todoList.map(todo => (
+          <li key={todo.title} style={{ width: 'fit-content' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <input
+                type='checkbox'
+                onChange={(): void => handleToggleTodoStatus(todo.title)}
+                checked={todo.isDone}
+              />
+              <p>{todo.title}</p>
+              <button type='button' onClick={(): void => handleRemoveTask(todo.title)}>
+                remove
+              </button>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <h2>Done</h2>
+      <ul style={{ listStyle: 'none' }}>
+        {doneList.map(todo => (
+          <li key={todo.title} style={{ width: 'fit-content' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <input
+                type='checkbox'
+                onChange={(): void => handleToggleTodoStatus(todo.title)}
+                checked={todo.isDone}
+              />
+              <p>{todo.title}</p>
+              <button type='button' onClick={(): void => handleRemoveTask(todo.title)}>
+                remove
+              </button>
+            </label>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
