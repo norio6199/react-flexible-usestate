@@ -36,7 +36,7 @@ const initialValues: InitialValue = {
 };
 
 const App: React.VFC = () => {
-  const [states, setStates, resetStates] = useStates(initialValues);
+  const [states, setStates] = useStates(initialValues);
 
   const todoList = React.useMemo(() => states.todos.filter(todo => !todo.isDone), [states.todos]);
   const doneList = React.useMemo(() => states.todos.filter(todo => todo.isDone), [states.todos]);
@@ -52,11 +52,11 @@ const App: React.VFC = () => {
         isDone: false,
       });
     });
-    resetStates('newTodoTitle');
+    setStates('newTodoTitle');
   };
 
   const handleResetAll = (): void => {
-    resetStates();
+    setStates();
   };
 
   const handleToggleTodoStatus = (title: string): void => {
