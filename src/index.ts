@@ -7,11 +7,7 @@ export type SetStatesAction<T> = <K extends keyof T>(...args: SetStatesArgs<T, K
 
 export type ResetStatesAction<T> = <K extends keyof T>(key?: K) => void;
 
-type UseStatesReturn<T> = {
-  states: T;
-  setStates: SetStatesAction<T>;
-  resetStates: ResetStatesAction<T>;
-};
+type UseStatesReturn<T> = [T, SetStatesAction<T>, ResetStatesAction<T>];
 
 export const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
   const [states, _setStates] = useState(initialValues);
@@ -44,5 +40,5 @@ export const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
     });
   };
 
-  return { states, setStates, resetStates };
+  return [states, setStates, resetStates];
 };
