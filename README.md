@@ -1,6 +1,7 @@
 # Guide for react-flexible-usestate
 
 React library for managing multiple states in an immutable and flexible.
+Here is [sample code](https://github.com/norio6199/react-flexible-usestate/blob/main/example/index.tsx) for react-flexible-usestate.
 
 ## Why need react-flexible-usestate
 
@@ -58,7 +59,7 @@ const resetStates = () => {
 + import { useStates } from 'react-flexible-usestate';
 
 - const [states, setStates] = useState(initialValues);
-+ const { states, setState, setStates, resetState } = useStates(initialValues);
++ const [ states, setStates ] = useStates(initialValues);
 
 // no diff for access each states.
 console.log(states.value01);
@@ -69,13 +70,8 @@ const updateOneState = () => {
 -   newStates.valueXX = 'new value';
 -   setStates(newStates);
 
-+   // pass key and value to setState.
-+   setState('valueXX', 'new value');
-
-+   // or if you want to use prev value, you can write like this.
-+   setState('valueXX', (prev) => {
-+     return  `update ${prev} to new value`;
-+   });
++   // just pass key and value.
++   setStates('valueXX', 'new value');
 };
 
 const updateFewStates = () => {
@@ -84,11 +80,7 @@ const updateFewStates = () => {
 -   newStates.valueYY = 'new value';
 -   setStates(newStates);
 
-+   // you can use setState.
-+   setState('valueXX', 'new value');
-+   setState('valueYY', 'new value');
-
-+   // or using setState(s) for more flexible!!
++   // you don't have to mind about immutable!!
 +   setStates((draft) => {
 +     draft.valueXX = 'new value';
 +     draft.valueYY = `update ${draft.valueYY} to new value`;
@@ -101,12 +93,12 @@ const resetStates = () => {
 -   newStates.valueYY = initialValues.valueYY;
 -   setStates(newStates);
 
-+   // pass key to resetState to initialize.
-+   resetState('valueXX');
-+   resetState('valueYY');
++   // pass key to initialize value.
++   setStates('valueXX');
++   setStates('valueYY');
 
 +   // or, if nothing is passed, all values will be initialized.
-+   resetState()
++   setStates()
 };
 ```
 
@@ -116,10 +108,10 @@ const resetStates = () => {
 typeof states.someText; // string
 typeof states.someNumber; // number
 
-setState('someText', 'new value'); // ok
-setState('someText', 123); // type error
+setStates('someText', 'new value'); // ok
+setStates('someText', 123); // type error
 
-resetState('Non-existent property'); // type error
+setStates('Non-existent property'); // type error
 ```
 
 ## Of course immutable
@@ -150,6 +142,12 @@ setStates(draft => {
 ## Release Note
 
 💣 is a marker for breaking changes.
+
+### v3.0.0
+
+- 💣 merge setState and resetState to setState(s)
+- 💣 change return type to array
+- update README
 
 ### v2.0.0
 
