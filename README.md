@@ -102,6 +102,15 @@ const resetStates = () => {
 };
 ```
 
+## Usage fot setStates
+
+| pattern                       | description                                      | ex.                                                                                                                                                                                                                                                     |
+| ----------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setStates()`                 | Reset all states to initial value.               | <pre>const resetAll = () => {<br>&nbsp;&nbsp;setStates();<br>} </pre>                                                                                                                                                                                   |
+| `setStates(string)`           | Reset state to initial value.                    | <pre>const resetValueXX = () => {<br>&nbsp;&nbsp;setStates('valueXX');<br>} </pre>                                                                                                                                                                      |
+| `setStates(string, string)`   | Set state to new value.                          | <pre>const updateValueXX = () => {<br>&nbsp;&nbsp;setStates('valueXX', 'new value');<br>} </pre>                                                                                                                                                        |
+| `setStates((draft) => {...})` | Set states to new values without mind immutable. | <pre>const updateSomeValues = () => {<br>&nbsp;&nbsp;setStates((draft) => {<br>&nbsp;&nbsp;&nbsp;&nbsp;draft.valueXX = 'new value';<br>&nbsp;&nbsp;&nbsp;&nbsp;draft.valueYY = \`update \${draft.valueYY} to new value\`;<br>&nbsp;&nbsp;});<br>}</pre> |
+
 ## Of course type safe
 
 ```ts
@@ -142,6 +151,10 @@ setStates(draft => {
 ## Release Note
 
 💣 is a marker for breaking changes.
+
+### v3.0.1
+
+- update README
 
 ### v3.0.0
 
