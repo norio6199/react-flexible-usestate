@@ -1,7 +1,7 @@
 {
   "name": "react-hooks-usefullstates",
   "author": "norio6199",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React library for managing multiple states in an immutable and useful.",
   "license": "MIT",
   "main": "dist/index.js",
