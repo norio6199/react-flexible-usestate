@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { useStates } from '../.';
+import { useFullStates } from '../.';
 
 type Todo = {
   title: string;
@@ -36,7 +36,7 @@ const initialValues: InitialValue = {
 };
 
 const App: React.VFC = () => {
-  const [states, setStates] = useStates(initialValues);
+  const [states, setStates] = useFullStates(initialValues);
 
   const todoList = React.useMemo(() => states.todos.filter(todo => !todo.isDone), [states.todos]);
   const doneList = React.useMemo(() => states.todos.filter(todo => todo.isDone), [states.todos]);
