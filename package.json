@@ -1,14 +1,14 @@
 {
-  "name": "react-flexible-usestate",
+  "name": "react-hooks-usefullstates",
   "author": "norio6199",
   "version": "3.0.2",
-  "description": "React library for managing multiple states in an immutable and flexible.",
+  "description": "React library for managing multiple states in an immutable and useful.",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/norio6199/react-flexible-usestate.git"
+    "url": "git+https://github.com/norio6199/react-hooks-useFullStates.git"
   },
   "keywords": [
     "react",
@@ -45,14 +45,14 @@
     "trailingComma": "all",
     "tabWidth": 2
   },
-  "module": "dist/react-flexible-usestate.esm.js",
+  "module": "dist/react-hooks-useFullStates.esm.js",
   "size-limit": [
     {
-      "path": "dist/react-flexible-usestate.cjs.production.min.js",
+      "path": "dist/react-hooks-useFullStates.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/react-flexible-usestate.esm.js",
+      "path": "dist/react-hooks-useFullStates.esm.js",
       "limit": "10 KB"
     }
   ],
@@ -71,7 +71,5 @@
   "volta": {
     "node": "16.13.1"
   },
-  "dependencies": {
-    "immer": "^9.0.7"
-  }
+  "dependencies": {}
 }
