@@ -1,7 +1,7 @@
-# Guide for react-hooks-useFullStates
+# Guide for react-hooks-usefullstates
 
 React library for managing multiple states in an immutable and useful.
-Here is [sample code](https://github.com/norio6199/react-hooks-useFullStates/blob/main/example/index.tsx) for react-hooks-useFullStates.
+Here is [sample code](https://github.com/norio6199/react-hooks-usefullstates/blob/main/example/index.tsx) for react-hooks-usefullstates.
 
 ## Why need
 
@@ -48,11 +48,11 @@ const resetStates = () => {
 };
 ```
 
-## It is time to use react-hooks-useFullStates
+## It is time to use react-hooks-usefullstates
 
 ```diff
 - import { useState } from 'react';
-+ import { useFullStates } from 'react-hooks-useFullStates';
++ import { useFullStates } from 'react-hooks-usefullstates';
 
 - const [value01, setValue01] = useState(initialValues.value01);
 - const [value02, setValue02] = useState(initialValues.value02);
