@@ -1,44 +1,50 @@
 import { useState } from 'react';
-import produce from 'immer';
 
-type SetStatesArgs<T, K extends keyof T> = [] | [K] | [K, T[K]] | [(draft: T) => void];
+type SetStatesParams<T, K extends keyof T> = [] | [K] | [K, T[K]] | [(prev: T) => void];
+type FullStates<T> = [T, <K extends keyof T>(...params: SetStatesParams<T, K>) => void];
 
-export type SetStatesAction<T> = <K extends keyof T>(...args: SetStatesArgs<T, K>) => void;
-
-type UseStatesReturn<T> = [T, SetStatesAction<T>];
-
-export const useStates = <T>(initialValues: T): UseStatesReturn<T> => {
+export const useFullStates = <T extends Record<string, unknown>>(
+  initialValues: T,
+): FullStates<T> => {
   const [states, _setStates] = useState(initialValues);
 
-  const stateProducer = (recipe: (draft: T) => void): void => {
-    _setStates(prev => produce(prev, recipe));
+  const setInitialValues = () => {
+    _setStates(initialValues);
   };
 
-  const setStates: SetStatesAction<T> = <K extends keyof T>(...args: SetStatesArgs<T, K>): void => {
-    stateProducer(draft => {
-      if (args.length === 0) {
-        // reset all state to initial value
-        const targetKeys = Object.keys(initialValues) as (keyof T)[];
-        targetKeys.forEach(key => {
-          stateProducer(draft => {
-            draft[key] = initialValues[key];
-          });
-        });
-      } else if (args.length === 1 && typeof args[0] === 'function') {
-        // set state with draft
-        args[0](draft);
-      } else if (args.length === 1 && typeof args[0] !== 'function') {
-        // reset state to initial value
-        draft[args[0]] = initialValues[args[0]];
-      } else if (args.length === 2) {
-        // set state with key and value
-        draft[args[0]] = args[1] as T[K];
-      } else {
-        throw new Error(
-          'Please read README for react-flexible-usestate.( https://github.com/norio6199/react-flexible-usestate/blob/main/README.md )',
-        );
-      }
+  const setStatesWithKeyAndValue = <K extends keyof T>(key: K, value: T[K]) => {
+    _setStates({
+      ...states,
+      [key]: value,
     });
+  };
+
+  const setStatesWithPrevValue = (updatePrevStates: (prev: T) => void) => {
+    const prevStates = { ...states };
+    updatePrevStates(prevStates);
+    _setStates(prevStates);
+  };
+
+  const setStates = <K extends keyof T>(...params: SetStatesParams<T, K>) => {
+    if (params.length === 0) {
+      // setStates()
+      setInitialValues();
+    } else if (params.length === 1) {
+      if (typeof params[0] === 'string') {
+        // setStates(key)
+        const key = params[0] as K;
+        setStatesWithKeyAndValue(key, initialValues[key]);
+      } else {
+        // setStates((prev) => { prev.hoge = 123 })
+        const updateStates = params[0] as (prev: T) => void;
+        setStatesWithPrevValue(updateStates);
+      }
+    } else {
+      // setStates(key, value)
+      const key = params[0] as K;
+      const value = params[1] as T[K];
+      setStatesWithKeyAndValue(key, value);
+    }
   };
 
   return [states, setStates];
